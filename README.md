@@ -22,7 +22,7 @@ To install the styles with [SASS](http://sass-lang.com), include the path:
 ./node_modules/vulcanup/src/scss
 ```
 
-And import (after you have changed the variables):
+And import:
 
 ```sass
 @import 'vulcanup';
@@ -37,11 +37,11 @@ The plugin dependencies are:
 
 - [jquery](http://jquery.com)
 - [blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload), its dependencies and its addon [jquery.fileupload-process.js](https://github.com/blueimp/jQuery-File-Upload/blob/master/js/jquery.fileupload-process.js)
-- [materialdesignicons.com](https://materialdesignicons.com) (this can be changed)
+- [materialdesignicons.com](https://materialdesignicons.com)
 
 An example of installation with built files is in the [demo](./demo).
 
-## Configuration
+## Configuration and use
 
 By default the plugin sends an XHR type `POST` to the endpoint `/api/files` with the file as `file` parameter.
 
@@ -49,13 +49,25 @@ The plugin by default expects the server to return a response with the following
 
 The icons by default are configured with [materialdesignicons.com](https://materialdesignicons.com) but you have to install it.
 
-## Use
+See [JavaScript API](./JS.md) and [SASS variables](./SASS.md) for configuration details.
 
-You can see a complete demo in [demo folder](./demo). Install dependencies and start the server.
+## Demo
 
-See [JavaScript API](./JS.md) for details of configuration.
+You can see a complete demo in [demo folder](./demo).
 
-See [SASS variables](./SASS.md) for details of configuration.
+Install dependencies:
+
+```bash
+npm install
+```
+
+And start the server:
+
+```bash
+node demo/server.js
+```
+
+To see demo at `http://localhost:7500`.
 
 ## License
 
