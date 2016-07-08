@@ -6,11 +6,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /**
  * PxLoader
  * https://github.com/thinkpixellab/PxLoader
- */
-
-/*
  * PixelLab Resource Loader
  * Loads resources while providing progress updates.
+ * @private
  */
 function PxLoader(settings) {
 
@@ -553,7 +551,14 @@ module.exports = {
 },{}],3:[function(require,module,exports){
 'use strict';
 
-module.exports = {
+/**
+ * @namespace settings
+ * @type {Object}
+ *
+ * @description
+ * vulcanup settings by default.
+ */
+var settings = {
 
   _id: null, // Input id.
   _type: null, // The type set.
@@ -566,51 +571,119 @@ module.exports = {
   _name: null, // Uploaded file name
   _width: null, // Image width
   _height: null, // Image height
-  _uploading: false,
+  _uploading: false, // Currently uploading a file.
 
-  // The kind of file the uploader will treat.
-  type: 'all', // String: 'all' | 'image' | 'pdf'
+  /**
+   * The kind of file the uploader will treat: `all` | `image` | `pdf`.
+   * @type {String}
+   * @default 'all'
+   */
+  type: 'all',
 
-  // This is the initial value
-  url: null, // String
+  /**
+   * This is the initial value.
+   * @type {String}
+   * @default null
+   */
+  url: null,
 
-  // If `showFileName` and `url` is true, the initial file name. If no file
-  // name is provided with an initial `url`, the `url` is set as file name.
-  name: '', // String
+  /**
+   * If there is an url, the initial file name. Is optional.
+   * @type {String}
+   * @default ''
+   */
+  name: '',
 
-  // Enable reupload?
+  /**
+   * Enable file reupload. If false, once the file is uploaded, you have to delete
+   * it in order to upload another in its place.
+   * @type {Boolean}
+   * @default true
+   */
   enableReupload: true,
 
-  // When is `type: 'image'`, if the image is treated as background contain,
-  // instead of cover and being resized.
+  /**
+   * On type image, if the image is treated as background contain, instead of
+   * cover and being resized.
+   * @type {Boolean}
+   * @default false
+   */
   imageContain: false,
 
-  // When is `type: 'image'`, resize the image previsualizator when image is
-  // loaded. If this is set to false, the background will have to be resized
-  // manually.
+  /**
+   * On type image, resize the image visualizator when the image is loaded. If
+   * this is set to false, the background will have to be resized manually.
+   * @type {Boolean}
+   * @default true
+   */
   imageResize: true,
 
-  // Minimum and maximum image height.
+  /**
+   * Minimum image height in pixels.
+   * @type {Number}
+   * @default 100
+   */
   imageMinHeight: 100,
+
+  /**
+   * Maximum image height in pixels.
+   * @type {Number}
+   * @default 400
+   */
   imageMaxHeight: 400,
 
-  // If the file can be removed, insert an option to do so.
-  canRemove: true, // Boolean
+  /**
+   * If the file can be removed, insert an option to do so.
+   * @type {Boolean}
+   * @default true
+   */
+  canRemove: true,
 
-  // Show the validations visually. Programmer has to attach an event
-  // handler to detect errors if set to false.
+  /**
+   * Show the validations visually. Programmer has to attach an event handler to
+   * detect errors if set to false.
+   * @type {Boolean}
+   * @default true
+   */
   showValidations: true,
 
-  // Server response handler.
-  handler: null, // function
+  /**
+   * Server response handler. If set, this will overwrite the way to treat the
+   * response from server when the file is uploaded. This function receives as
+   * first parameter the response from server and have to return an object with
+   * the an `url` property with the file url.
+   * @type {Function}
+   * @default null
+   */
+  handler: null,
 
-  // File Uploader options.
+  /**
+   * File upload plugin options.
+   * @type {Object}
+   */
   fileupload: {
 
-    // Server request.
+    /**
+     * URL to upload files.
+     * @type {String}
+     * @default '/api/files'
+     */
     url: '/api/files',
+
+    /**
+     * XHR type.
+     * @type {String}
+     * @default 'POST'
+     */
     type: 'POST',
+
+    /**
+     * The file param name.
+     * @type {String}
+     * @default 'file'
+     */
     paramName: 'file',
+
     //formData: [
     //    { name: 'key', value: 'value' }
     //],
@@ -631,12 +704,36 @@ module.exports = {
 
     // Validation.
     maxNumberOfFiles: 1, // Only one file per instance.
-    minFileSize: 1, // 1 byte
-    maxFileSize: 2000000, // 2 MB
-    acceptFileTypes: undefined // All file types.
+
+    /**
+     * minFileSize in bytes
+     * @type {Number}
+     * @default 1 (1 byte)
+     */
+    minFileSize: 1,
+
+    /**
+     * maxFileSize in bytes
+     * @type {Number}
+     * @default 2000000 (2MB)
+     */
+    maxFileSize: 2000000,
+
+    /**
+     * acceptFileTypes
+     * @type {RegExp}
+     * @default undefined (any file)
+     */
+    acceptFileTypes: undefined
   },
 
-  // The type of files accepted.
+  /**
+   * The type of files accepted. Every property (the type id) should be an object describing:
+   * - {String} name - The name of the file for the user.
+   * - {RegExp} formats - The regexp to validate the file type.
+   * - {String} formatsText - The list of formats for the user.
+   * @type {Object}
+   */
   types: {
     'all': {
       name: 'file',
@@ -655,6 +752,10 @@ module.exports = {
     }
   },
 
+  /**
+   * All messages used.
+   * @type {Object}
+   */
   messages: {
     UPLOAD: 'Drag and drop {{name}} or browse',
     UPLOADING: 'Uploading',
@@ -667,6 +768,10 @@ module.exports = {
     EUSER_SIZE_INFERIOR: 'File size is below the minimum size: {{minSize}}. Please use another.'
   },
 
+  /**
+   * All icons used.
+   * @type {Object}
+   */
   icons: {
     UPLOAD: 'mdi mdi-cloud-upload',
     UPLOADING: 'mdi mdi-cloud',
@@ -676,6 +781,8 @@ module.exports = {
     REMOVE: 'mdi mdi-close'
   }
 };
+
+module.exports = settings;
 
 },{}],4:[function(require,module,exports){
 'use strict';
@@ -779,11 +886,23 @@ var utils = require('./utils');
 var methods = {
 
   /**
-   * Set a file as uploaded in this instance.
+   * ***Invoke over instantiated elements.***
    *
-   * @param  {Object} values
-   * @param  {String} values.url
-   * @param  {String} [values.name]
+   * Update the current file as uploaded.
+   *
+   * @function external:"jQuery.fn".vulcanup
+   *
+   * @param  {String} update - With value `'update'`.
+   * @param  {Object} fileInfo - The file details.
+   * @param  {String} fileInfo.url - The file URL.
+   * @param  {String} [fileInfo.name] - The file name.
+   *
+   * @return {jQuery} The same element.
+   *
+   * @example
+   * $('#inputFile').vulcanup('update', {
+   *   url: '/path/to/file.ext'
+   * });
    */
 
   update: function update(values) {
@@ -795,9 +914,17 @@ var methods = {
 
 
   /**
-   * Get the current file.
+   * ***Invoke over instantiated elements.***
    *
-   * @return {Object}
+   * Get the current uploaded file.
+   *
+   * @function external:"jQuery.fn".vulcanup
+   *
+   * @param  {String} get - With value `'get'`.
+   * @return {Object|null} The file info or null if there is no file.
+   *
+   * @example
+   * const fileInfo = $('#inputFile').vulcanup('get');  // { url, name }
    */
   get: function get() {
     var conf = this.data('vulcanup-config');
@@ -1046,6 +1173,14 @@ var methods = {
 
     loader.start();
   },
+
+
+  /**
+   * Set validation error message.
+   *
+   * @private
+   * @param {String} err
+   */
   setValidation: function setValidation(err) {
 
     var conf = this.data('vulcanup-config');
@@ -1062,6 +1197,13 @@ var methods = {
       conf._$validations.html(msg).hide(0).show(300);
     }
   },
+
+
+  /**
+   * Hide validation errors.
+   *
+   * @private
+   */
   hideValidation: function hideValidation() {
     var conf = this.data('vulcanup-config');
     if (conf.showValidations) {
@@ -1166,6 +1308,26 @@ module.exports = utils;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
+/**
+ * jQuery object.
+ * @external jQuery
+ * @see {@link http://api.jquery.com/jQuery/}
+ */
+
+/**
+ * The jQuery plugin namespace.
+ * @external "jQuery.fn"
+ * @see {@link http://docs.jquery.com/Plugins/Authoring The jQuery Plugin Guide}
+ */
+
+/**
+ * The plugin global configuration object.
+ * @external "jQuery.vulcanup"
+ * @property {String} version - The plugin version.
+ * @property {settings} defaults - The default configuration.
+ * @property {Object} templates - The default templates.
+ */
+
 require('./jup-validation');
 
 var templates = require('./templates');
@@ -1174,10 +1336,49 @@ var defaults = require('./defaults');
 var methods = require('./methods');
 var utils = require('./utils');
 
+var version = '1.0.0-beta';
+
 $(document).on('drop dragover', function (e) {
   e.preventDefault();
 });
 
+/**
+ * Invoke on a `<input type="file">` to set it as a file uploader.
+ *
+ * By default the configuration is {@link settings} but you can pass an object
+ * to configure it as you want.
+ *
+ * Listen to event changes on the same input, review demo to see how to implement them
+ * and what parameters they receive:
+ *
+ * **`vulcanup-val`** - On validation error. Receives as parameter an object with the error message.
+ *
+ * **`vulcanup-upload`** - On file started to being uploaded.
+ *
+ * **`vulcanup-progress`** - On upload progress update. Receives as parameter the progress number.
+ *
+ * **`vulcanup-error`** - On server error. Receives as parameter an object with details.
+ *
+ * **`vulcanup-change`** - On file change. This is triggered when the user uploads
+ * a file in the server, when it is deleted or when it is changed programmatically.
+ * Receives as parameter an object with the new file details.
+ *
+ * **`vulcanup-delete`** - On file deleted. Receives as parameter the deleted file details.
+ *
+ * **`vulcanup-uploaded`** - On file uploaded in the server.
+ *
+ * **`vulcanup-complete`** - On upload process completed. This is fired when the
+ * XHR is finished, regardless of fail or success.
+ *
+ * @function external:"jQuery.fn".vulcanup
+ *
+ * @param  {settings} [settings] - Optional configuration.
+ *
+ * @example
+ * $('input[type=file]').vulcanup({
+ *   url: '/initial/file/url.ext'
+ * });
+ */
 jQuery.fn.vulcanup = function (settings) {
   'use strict';
 
@@ -1338,11 +1539,11 @@ jQuery.fn.vulcanup = function (settings) {
   $container.find('.vulcanup__remove').on('click', function (e) {
     e.preventDefault();
 
+    $input.trigger('vulcanup-delete', { url: conf._url, name: conf._name });
+    $input.trigger('vulcanup-change', { url: null, name: null });
+
     methods.updateProgress.call($input, 0, { silent: true });
     methods.setUpload.call($input);
-
-    $input.trigger('vulcanup-delete');
-    $input.trigger('vulcanup-change', { url: null, name: null });
 
     return false;
   });
@@ -1364,5 +1565,7 @@ jQuery.fn.vulcanup = function (settings) {
 
   return this;
 };
+
+module.exports = jQuery.vulcanup = { version: version, defaults: defaults, templates: templates };
 
 },{"./constants":2,"./defaults":3,"./jup-validation":4,"./methods":5,"./templates":6,"./utils":7}]},{},[8]);
