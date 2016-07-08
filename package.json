@@ -45,6 +45,6 @@
   "scripts": {
     "all": "npm run build && npm run doc",
     "build": "gulp",
-    "doc": "jsdoc2md src/**/*.js > API.md"
+    "doc": "jsdoc2md src/**/*.js > JS.md"
   }
 }
