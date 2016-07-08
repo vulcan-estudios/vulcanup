@@ -55,7 +55,7 @@ You can see a complete demo in [demo folder](./demo). Install dependencies and s
 
 See [JavaScript API](./JS.md) for details of configuration.
 
-See [SASS variables][./SASS.md] for details of configuration.
+See [SASS variables](./SASS.md) for details of configuration.
 
 ## License
 
