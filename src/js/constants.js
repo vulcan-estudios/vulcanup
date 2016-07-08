@@ -1,0 +1,7 @@
+module.exports = {
+  USER: {
+    E_FORMAT: 'EUSER_FORMAT',
+    E_SIZE_EXCEEDED: 'EUSER_SIZE_EXCEEDED',
+    E_SIZE_INFERIOR: 'EUSER_SIZE_INFERIOR',
+  }
+};

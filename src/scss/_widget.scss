@@ -1,0 +1,202 @@
+@import './vars';
+
+.vulcanup {
+  box-sizing: border-box;
+  z-index: 1;
+  position: relative;
+
+  margin-bottom: 16px;
+  border: $vulcanup-border;
+  text-align: center;
+  vertical-align: middle;
+  background-color: $vulcanup-background-color;
+  color: $vulcanup-color;
+  font-size: 16px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  .vulcanup__remove {
+    z-index: 20;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+
+    display: none;
+    padding: 3px;
+    font-size: $vulcanup-icons-font-size;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color #{$vulcanup-animation-time}ms;
+  }
+
+  .vulcanup__dropzone {
+    padding: 15px;
+    width: 100%;
+    min-width: 200px;
+    min-height: 45px;
+    max-height: 100%;
+    line-height: 1;
+    font-size: $vulcanup-font-size;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: height #{$vulcanup-animation-time/2}ms;
+    cursor: pointer;
+  }
+
+  .vulcanup__placeholder {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: all #{$vulcanup-animation-time}ms;
+
+    i {
+      display: inline-block;
+      margin-top: -3px;
+      font-size: $vulcanup-icons-font-size;
+      vertical-align: middle;
+    }
+  }
+
+  .vulcanup__placeholder__content {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    max-width: calc(100% - 60px);
+    -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .vulcanup__progressbar {
+    position: absolute;
+    z-index: 20;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    height: 5px;
+
+    span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background-color: $vulcanup-uploading-bar-color;
+      transition: background-color #{$vulcanup-animation-time}ms, width #{$vulcanup-animation-time/3}ms;
+    }
+  }
+
+  &.vulcanup_isimage {
+    .vulcanup__placeholder__content {
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &.vulcanup_isimagecontain {
+    .vulcanup__dropzone {
+      background-size: contain;
+    }
+  }
+
+  &.vulcanup_dragover {
+    border-color: $vulcanup-drag-border-color;
+    border-width: 3px;
+
+    .vulcanup__placeholder {
+      background-color: rgba(0,0,0,0.5);
+    }
+  }
+
+  &.vulcanup_uploading {
+    cursor: auto;
+
+    .vulcanup__dropzone {
+      background-color: $vulcanup-uploading-background-color;
+      color: $vulcanup-uploading-color;
+      cursor: auto;
+    }
+  }
+
+  &.vulcanup_error {
+    color: $vulcanup-error-color;
+    backgrond-color: $vulcanup-error-background-color;
+  }
+
+  &.vulcanup_uploaded {
+
+    .vulcanup__progressbar {
+      span {
+        background-color: $vulcanup-uploaded-bar-color;
+      }
+    }
+
+    &.vulcanup_canremove {
+      .vulcanup__remove {
+        display: block;
+      }
+    }
+
+    &.vulcanup_noreupload {
+      cursor: auto;
+
+      .vulcanup__dropzone {
+        cursor: auto;
+      }
+    }
+
+    &:not(.vulcanup_isimage) {
+      .vulcanup__placeholder__content {
+        left: 15px;
+        -ms-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+      }
+    }
+
+    &.vulcanup_isimage {
+      background-color: #fff;
+
+      .vulcanup__remove {
+        background-color: rgba(0,0,0,0.5);
+        color: #fff;
+      }
+
+      .vulcanup__dropzone {
+        padding: 0;
+        height: 250px;
+      }
+
+      .vulcanup__placeholder {
+        opacity: 0;
+        text-shadow: 0 0 5px #000;
+        color: #fff;
+        font-size: 1em;
+      }
+
+      &:hover,
+      &:focus {
+        .vulcanup__remove {
+          background-color: transparent;
+        }
+        .vulcanup__placeholder {
+          opacity: 1;
+          background-color: rgba(0,0,0,0.5);
+        }
+      }
+    }
+  }
+}
