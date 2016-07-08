@@ -1,3 +1,23 @@
+/**
+ * jQuery object.
+ * @external jQuery
+ * @see {@link http://api.jquery.com/jQuery/}
+ */
+
+/**
+ * The jQuery plugin namespace.
+ * @external "jQuery.fn"
+ * @see {@link http://docs.jquery.com/Plugins/Authoring The jQuery Plugin Guide}
+ */
+
+/**
+ * The plugin global configuration object.
+ * @external "jQuery.vulcanup"
+ * @property {String} version - The plugin version.
+ * @property {settings} defaults - The default configuration.
+ * @property {Object} templates - The default templates.
+ */
+
 require('./jup-validation');
 
 const templates = require('./templates');
@@ -7,11 +27,51 @@ const methods = require('./methods');
 const utils = require('./utils');
 
 
+const version = '1.0.0-beta';
+
+
 $(document).on('drop dragover', function (e) {
   e.preventDefault();
 });
 
 
+/**
+ * Invoke on a `<input type="file">` to set it as a file uploader.
+ *
+ * By default the configuration is {@link settings} but you can pass an object
+ * to configure it as you want.
+ *
+ * Listen to event changes on the same input, review demo to see how to implement them
+ * and what parameters they receive:
+ *
+ * **`vulcanup-val`** - On validation error. Receives as parameter an object with the error message.
+ *
+ * **`vulcanup-upload`** - On file started to being uploaded.
+ *
+ * **`vulcanup-progress`** - On upload progress update. Receives as parameter the progress number.
+ *
+ * **`vulcanup-error`** - On server error. Receives as parameter an object with details.
+ *
+ * **`vulcanup-change`** - On file change. This is triggered when the user uploads
+ * a file in the server, when it is deleted or when it is changed programmatically.
+ * Receives as parameter an object with the new file details.
+ *
+ * **`vulcanup-delete`** - On file deleted. Receives as parameter the deleted file details.
+ *
+ * **`vulcanup-uploaded`** - On file uploaded in the server.
+ *
+ * **`vulcanup-complete`** - On upload process completed. This is fired when the
+ * XHR is finished, regardless of fail or success.
+ *
+ * @function external:"jQuery.fn".vulcanup
+ *
+ * @param  {settings} [settings] - Optional configuration.
+ *
+ * @example
+ * $('input[type=file]').vulcanup({
+ *   url: '/initial/file/url.ext'
+ * });
+ */
 jQuery.fn.vulcanup = function (settings) {
   'use strict';
 
@@ -179,11 +239,11 @@ jQuery.fn.vulcanup = function (settings) {
   $container.find('.vulcanup__remove').on('click', function (e) {
     e.preventDefault();
 
+    $input.trigger(`vulcanup-delete`, { url: conf._url, name: conf._name });
+    $input.trigger(`vulcanup-change`, { url: null, name: null });
+
     methods.updateProgress.call($input, 0, {silent: true});
     methods.setUpload.call($input);
-
-    $input.trigger(`vulcanup-delete`);
-    $input.trigger(`vulcanup-change`, { url: null, name: null });
 
     return false;
   });
@@ -206,3 +266,6 @@ jQuery.fn.vulcanup = function (settings) {
 
   return this;
 };
+
+
+module.exports = jQuery.vulcanup = { version, defaults, templates };

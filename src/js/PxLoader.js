@@ -1,11 +1,9 @@
 /**
  * PxLoader
  * https://github.com/thinkpixellab/PxLoader
- */
-
-/*
  * PixelLab Resource Loader
  * Loads resources while providing progress updates.
+ * @private
  */
 function PxLoader(settings) {
 

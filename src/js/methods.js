@@ -5,11 +5,23 @@ const utils = require('./utils');
 const methods = {
 
   /**
-   * Set a file as uploaded in this instance.
+   * ***Invoke over instantiated elements.***
    *
-   * @param  {Object} values
-   * @param  {String} values.url
-   * @param  {String} [values.name]
+   * Update the current file as uploaded.
+   *
+   * @function external:"jQuery.fn".vulcanup
+   *
+   * @param  {String} update - With value `'update'`.
+   * @param  {Object} fileInfo - The file details.
+   * @param  {String} fileInfo.url - The file URL.
+   * @param  {String} [fileInfo.name] - The file name.
+   *
+   * @return {jQuery} The same element.
+   *
+   * @example
+   * $('#inputFile').vulcanup('update', {
+   *   url: '/path/to/file.ext'
+   * });
    */
   update (values) {
     const conf = this.data(`vulcanup-config`);
@@ -19,9 +31,17 @@ const methods = {
   },
 
   /**
-   * Get the current file.
+   * ***Invoke over instantiated elements.***
    *
-   * @return {Object}
+   * Get the current uploaded file.
+   *
+   * @function external:"jQuery.fn".vulcanup
+   *
+   * @param  {String} get - With value `'get'`.
+   * @return {Object|null} The file info or null if there is no file.
+   *
+   * @example
+   * const fileInfo = $('#inputFile').vulcanup('get');  // { url, name }
    */
   get () {
     const conf = this.data(`vulcanup-config`);
@@ -260,6 +280,12 @@ const methods = {
     loader.start();
   },
 
+  /**
+   * Set validation error message.
+   *
+   * @private
+   * @param {String} err
+   */
   setValidation (err) {
 
     const conf = this.data(`vulcanup-config`);
@@ -277,6 +303,11 @@ const methods = {
     }
   },
 
+  /**
+   * Hide validation errors.
+   *
+   * @private
+   */
   hideValidation () {
     const conf = this.data(`vulcanup-config`);
     if (conf.showValidations) {
