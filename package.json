@@ -1,0 +1,50 @@
+{
+  "name": "vulcanup",
+  "version": "1.0.0-beta",
+  "description": "jQuery plugin to upload single files and preview images using blueimp/jQuery-File-Upload",
+  "main": "src/js/vulcanup.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vulcan-estudios/vulcanup.git"
+  },
+  "keywords": [
+    "browser",
+    "jquery",
+    "plugin",
+    "file",
+    "upload"
+  ],
+  "author": "Romel Pérez (romelperez.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vulcan-estudios/vulcanup/issues"
+  },
+  "homepage": "https://github.com/vulcan-estudios/vulcanup#readme",
+  "peerDependencies": {
+    "jquery": "*"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.5.0",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^2.0.11",
+    "gulp-rename": "^1.2.2",
+    "gulp-streamify": "^1.0.2",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "jquery": "^3.0.0",
+    "jquery-file-upload-middleware": "^0.1.7",
+    "jsdoc-to-markdown": "^1.3.6",
+    "node-sass": "^3.8.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "all": "npm run build && npm run doc",
+    "build": "gulp",
+    "doc": "jsdoc2md src/**/*.js > API.md"
+  }
+}
